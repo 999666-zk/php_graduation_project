@@ -1,0 +1,164 @@
+{layout name="public/layout" /}
+<script src="__STATIC__/public/up/jquery.uploadify.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC__/public/up/uploadify.css">
+<div class="col-md-10">
+	<ol class="breadcrumb">
+	  <li><a href="#"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a></li>
+	  <li><a href="#">轮播管理</a></li>
+	  <li class="active">轮播列表</li>
+	  <a href="" style="float:right;height:25px;" class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span></a>
+	  <span style="clear:both"></span>
+	</ol>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<button class="btn btn-danger" onclick="delAll()"> <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;批量删除</button>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#add"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;添加轮播</button>
+			<div class="pull-right" style="margin-left:30px;"><p class="tot">共有数据:&nbsp;<b id="tot">{$count}</b>&nbsp;条</p></div>
+			<form class="form-inline pull-right" action="{:url('index')}" role="form">
+				<div class="form-group">
+					<input type="text" name="search" class="form-control" placeholder="请输入要搜索内容">
+				</div>
+				<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search">&nbsp;搜索</span></button>
+			</form>
+		</div>
+		<div class="panel-body">
+            <table class="table table-bordered table-hover">
+                 <tr>
+                    <th><input type="checkbox" name="" id="" class="checkAll"></th>
+                     <th>id</th>
+                     <th>图片</th>
+                     <th>链接</th>
+                     <th>排序</th>
+                     <th>操作</th>
+                 </tr> 
+                 {volist name="data" id="dat"}
+				<tr id="tr{$dat.id}">
+					<td><input type="checkbox" name="" value="{$dat.id}" class="checks"></td>
+                    <td>{$dat.id}</td>
+                    <td><img src="__STATIC__/uploads/lunbo/{$dat.img}" alt="" height="50px" width="80px"></td>
+                    <td>{$dat.href}</td>
+                    <td><input type="text" name="sort"value="{$dat.sort}" onblur="sort(this,{$dat.id})"></td>
+<!--                    <td><a class="glyphicon glyphicon-trash" href="{:url('del',array('id'=>$dat.id))}"></a>&nbsp;&nbsp;|&nbsp;&nbsp; <a class="glyphicon glyphicon-tag" href="{:url('update',array('id'=>$dat.id))}"></a></td>-->
+                    <td><span class="glyphicon glyphicon-trash" onclick="del(this,{$dat.id})"></span>&nbsp;&nbsp;|&nbsp;&nbsp; <a class="glyphicon glyphicon-tag" href="{:url('update',array('id'=>$dat.id))}"></a></td>
+                 </tr>
+                 {/volist}
+            </table>  
+        </div>
+		<div class="panel-footer">
+			
+		</div>
+	</div>
+</div>
+<!-- 添加弹出框 -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加轮播</h4>
+      </div>
+      <div class="modal-body">
+
+<!--       	<form action="{:url('add')}" method="post">-->
+		  <form onsubmit="return false" id="addForm">
+       		<div class="form-group">
+       			<label for="">图片</label>
+<!--				设置空的div容器用来展示存放的图片-->
+       			<div id="queue"></div>
+                <input type="hidden" name="img" id="addImg" value="">
+                <input id="file_upload" name="file_upload" type="file" multiple="true">
+       		</div>
+       		<div class="form-group">
+       			<label for="">链接</label>
+       			<input type="text" name="href" id="addLink" class="form-control">
+				<input type="hidden" name="sort" id="sort" value="">
+       		</div>
+       		<div class="form-group">
+       			<input value="提交" class="btn btn-success" onclick="add()">
+       			<input type="reset" value="重置" class="btn btn-danger">
+       		</div>
+       	</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+//文件上传
+    $(function() {
+        $('#file_upload').uploadify({
+            'swf'      : '__STATIC__/public/up/uploadify.swf',
+            'uploader' : "{:url('ajax_upload')}",
+            'buttonText':'上传轮播图片',
+            'fileObjName':'file',
+            onUploadSuccess:function(file,data){
+                img="<img src='__STATIC__/uploads/lunbo/"+data+"' alt='' width='200px' height='80px'>";
+                // alert(data);  //20211109\676cd28d733b1f21f993555114ff65d3.png  data值
+                $("#queue").html(img);
+                $('#addImg').val(data);
+
+            }
+        });
+    });
+
+function add(){
+	str=$('#addForm').serialize();  //序列化
+	$.post("{:url('ajax_add')}",{str:str},function(data){
+		if(data.code!=1){
+			$('.table').append(data);
+			$('.close').click();
+			num=$('#tot').html();
+			num=parseInt(num);
+			$('#tot').html(++num);
+		}else{
+			alert(data.error);
+		}
+	})
+}
+
+//删除
+function del(obj,id){
+	$.post("{:url('ajax_del')}",{id:id},function(data){
+		if(data==1){
+			$(obj).parent().parent().remove();
+			num=$('#tot').html();
+			num=parseInt(num);
+			$('#tot').html(--num);
+		}
+	});
+}
+// 批量删除
+$('.checkAll').click(function(){
+	$('.checks').click();
+});
+function delAll(){
+	datas=$('.checks:checked'); //取值
+	// console.log(datas);
+	arr=new Array();
+	for(i=0;i<datas.length;i++){
+		arr[i]=datas.eq(i).val();
+	}
+	str=arr.join(',',arr);
+	// alert(str);
+	$.post("{:url('ajax_delAll')}",{str:str},function(data){
+		if(data==arr.length){
+			for(i=0;i<arr.length;i++){
+				$("#tr"+arr[i]).remove();
+			}
+		}else{
+			alert("删除失败");
+		}
+	})
+}
+    // 排序
+    function sort(obj,id){
+       num=$(obj).val();
+       $.post("{:url('sort')}",{sort:num,id:id},function(data){
+            if(data==1){
+                $(this).val(num);
+            }
+       })
+    }
+</script>

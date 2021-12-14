@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__STATIC__/public/bs/css/bootstrap.min.css">
+    <script src="__STATIC__/public/bs/js/jquery.min.js"></script>
+    <script src="__STATIC__/public/bs/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/admin/css/admin.css">
+    <style>
+        body{
+            background-image: url("__STATIC__/admin/img/background_img.jpg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" style="width: 400px;margin-left: auto;margin-right: auto;margin-top: 300px;background-color:#eee;border: 2px solid #eef;border-radius: 4px;opacity: 0.8;">
+    <form action="" method="post">
+        <button type="button" onclick="toIndex()" style="margin-top:20px; margin-bottom: 20px;" class="btn btn-default btn-sm"><strong><</strong>BACK</button>
+        <h2 style="text-align: center;color:#10468c;margin-bottom: 40px;">欢迎登录后台</h2>
+        <div class="form-group has-preview">
+            <div class="input-group">
+                <span class="input-group-addon">用户名</span>
+                <input type="text" name="username" class="form-control" id="inputGroupSuccess3" aria-describedby="inputGroupSuccess1Status">
+            </div>
+        </div>
+        <div class="form-group has-preview">
+            <div class="input-group">
+                <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+                <input type="password" name="password" class="form-control" id="inputGroupSuccess4" aria-describedby="inputGroupSuccess1Status">
+            </div>
+        </div>
+        <div class="form-group has-preview">
+            <div class="input-group">
+                <span class="input-group-addon">验证码</span>
+                <input type="text" name="captcha" class="form-control" id="inputGroupSuccess5" aria-describedby="inputGroupSuccess1Status">
+            </div>
+            <div><img onclick="refresh()" id="captcha_img" style="width: 140px;height:40px;margin-left: 120px;margin-top: 10px;border: 2px solid #9e9e9e;border-radius: 4px;" src="{:captcha_src()}" alt="captcha"></div>
+        </div>
+        <div class="form-group has-error">
+            <button type="submit" class="btn btn-primary">登录</button>
+            <button type="reset" class="btn btn-warning" style="float: right;">重置</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+<script>
+    function refresh() {
+        var ts = Date.parse(new Date())/1000;
+        $('#captcha_img').attr("src", "/captcha?id="+ts);
+    }
+    function toIndex() {
+            window.location.href="http://www.tp5.com/index.php/index/login/index.html"
+    }
+</script>

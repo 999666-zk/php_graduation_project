@@ -1,0 +1,37 @@
+{layout name="public/layout" /}
+<div class="col-md-10">
+    <ol class="breadcrumb">
+        <li><a href="#"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a></li>
+        <li><a href="#">权限管理</a></li>
+        <li class="active">权限列表</li>
+        <a href="" style="float:right;height:25px;" class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span></a>
+        <span style="clear:both"></span>
+    </ol>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<a href="{:url('add')}" style="color:white">添加规则</a></button>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>管理员名称</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                {volist name="data" id="data"}
+                <tr>
+                    <td>{$data.id}</td>
+                    <td>
+                        {$data.title}
+                    </td>
+                    <td>{$data.status==1?'启用':'禁用'}</td>
+                    <td><a class="glyphicon glyphicon-trash" href="{:url('del',array('id'=>$data.id))}"></a>&nbsp;&nbsp;|&nbsp;&nbsp; <a class="glyphicon glyphicon-tag" href="{:url('update',array('id'=>$data.id))}"></a></td>
+                </tr>
+                {/volist}
+            </table>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
+</div>

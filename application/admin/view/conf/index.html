@@ -1,0 +1,54 @@
+{layout name="public/layout" /}
+<div class="col-md-10">
+    <ol class="breadcrumb">
+      <li><a href="#"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a></li>
+      <li><a href="#">配置管理</a></li>
+      <li class="active">配置列表</li>
+      <a href="" style="float:right;height:25px;" class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span></a>
+      <span style="clear:both"></span>
+    </ol>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<a href="{:url('add')}" style="color:white">添加配置</a></button>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover">
+                 <tr>
+                     <th>id</th>
+                     <th>配置中文</th>
+                     <th>配置英文</th>
+                     <th>配置类型</th>
+                     <th>操作</th>
+                 </tr> 
+                 {volist name="data" id="dat"}
+                 <tr>
+                   <td>{$dat.id}</td>
+                   <td>{$dat.cname}</td>
+                   <td>{$dat.ename}</td>
+                   <td>
+                    {if condition="$dat['type'] eq 1"}
+                    单行文本
+                    {elseif condition="$dat['type'] eq 2"}
+                    多行文本
+                    {elseif condition="$dat['type'] eq 3"}
+                    单选按钮
+                    {elseif condition="$dat['type'] eq 4"}
+                    多选按钮
+                    {elseif condition="$dat['type'] eq 5"}
+                    下拉菜单
+                    {else}
+                    未知
+                    {/if}
+                   </td>
+                   <td>
+                    <a class="glyphicon glyphicon-trash" href="{:url('del',array('id'=>$dat.id))}"></a>&nbsp;&nbsp;|&nbsp;&nbsp; <a class="glyphicon glyphicon-tag" href="{:url('update',array('id'=>$dat.id))}"></a>
+                   </td>
+                 </tr>
+                 {/volist}
+            </table>  
+        </div>
+        <div class="panel-footer">
+          {$page}
+        </div>
+    </div>
+</div>

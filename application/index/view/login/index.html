@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__STATIC__/public/bs/css/bootstrap.min.css">
+    <script src="__STATIC__/public/bs/js/jquery.min.js"></script>
+    <script src="__STATIC__/public/bs/js/bootstrap.min.js"></script>
+    <style>
+        html {
+            overflow-y: scroll;
+        }
+        :root {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        :root body {
+            position: absolute;
+        }
+        body {
+            width: 100vw;
+
+        }
+    </style>
+</head>
+
+<body>
+<div class="visible" style="margin-top: 10px;">
+    <div class="col-md-7 col-sm-7 col-xs-7" style="height: 1002px;">
+
+        <div id="myCarousel" class="carousel slide" >
+            <!-- 轮播（Carousel）指标 -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="__STATIC__/admin/img/end_lunbo3.jpg" alt="First slide">
+                </div>
+                <div class="item">
+                    <img src="__STATIC__/admin/img/end_lunbo2.jpg" alt="Second slide">
+                </div>
+                <div class="item">
+                    <img src="__STATIC__/admin/img/end_lunbo4.jpg" alt="Third slide">
+                </div>
+            </div>
+            <!-- 轮播（Carousel）导航 -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </div>
+    <div class="col-md-5 col-sm-5 col-xs-5" style="height: 900px;">
+
+        <div class="container" style="width: 450px;margin-top: 300px;">
+            <h2 style="text-align: center;margin-bottom: 20px;">欢迎登录</h2>
+            <form action="" method="post">
+                <div class="form-group has-preview ">
+                    <label >手机号</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">&nbsp;📱&nbsp;</span>
+                        <input type="text" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">🔑</span>
+                        <input type="password" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess1Status">
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block " value="登录">
+                <input type="button" class="btn btn-warning btn-block" value="重置">
+                <input type="button" class="btn btn-primary btn-info btn-block " value="注册">
+            </form>
+
+            <div style="margin-top: 20px;float: left;">
+                <div class="container" style="width: auto;padding-left: 0px;">
+                    <input type="button" class="btn btn-default" value="手机验证登录" data-toggle="modal" data-target="#s1">
+                    <div class="modal fade" tabindex="-1" role="dialog" id="s1">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">手机验证码登录框</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>欢迎登录</p>
+                                    <form action="" method="post">
+                                        <div class="form-group">
+                                            <label>手机号</label>
+                                            <input name="" id="phone" type="text" class="form-control">
+                                            <input onclick="send()" class="btn btn-default btn-primary btn-login" value="发送验证码" style="margin-top: 10px;">
+                                        </div>
+                                    </form>
+                                    <form action="">
+                                        <div class="form-group">
+                                            <label>验证码</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default btn-primary btn-login" value="登录">
+                                    <input type="button" class="btn btn-default btn-primary" data-dismiss="modal" value="取消">
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;float:right;">
+                <input type="button" class="btn btn-default" onclick="adminlogin()" value="后台登录">
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $('.btn-info').on({
+        'click':function () {
+            $('.form-group').removeClass('has-error');
+
+            for (var i = 0;i < $('.form-control').length;i++){
+                if ($('.form-control').eq(i).val() == ''){
+                    $('.form-group').eq(i).addClass('has-error');
+                }
+            }
+
+            if (!$('.has-error').length){
+                alert('成功了');
+            }
+        }
+    })
+    function adminlogin() {
+        window.location.href="http://www.tp5.com/index.php/admin/login/index.html"
+    }
+
+    function send() {
+        var str = $('#phone').val();
+        $.post("{:url('Captcha')}"),{str:str},function(data){
+            // console.log(data);
+        }
+    }
+</script>

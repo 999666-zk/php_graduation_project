@@ -1,0 +1,8 @@
+<tr id="tr{$dat.id}">
+    <td><input type="checkbox" value="{$dat.id}" class="checks"></td>
+    <td>{$dat.id}</td>
+    <td><img src="__STATIC__/uploads/lunbo/{$dat.img}" alt="" height="50px" width="80px"></td>
+    <td>{$dat.href}</td>
+    <td><input type="text" name="sort" value="{$dat.sort}" onblur="sort(this,{$dat.id})"></td>
+    <td><span class="glyphicon glyphicon-trash" onclick="del(this,{$dat.id})"></span>&nbsp;&nbsp;|&nbsp;&nbsp; <a class="glyphicon glyphicon-tag" href="{:url('update',array('id'=>$dat.id))}"></a></td>
+</tr>
